@@ -1,0 +1,27 @@
+For the database image:
+	Build the database with:
+		docker build -t kilo/iss_2021-db_i .
+
+	Strip the image with:
+		./strip-db.sh
+	
+	Run the stripped image with:
+		docker run --net kilo/iss_2021_n --ip 203.0.113.88 --hostname db.cyber.test -e MYSQL_ROOT_PASSWORD="CorrectHorseBatteryStaple" -e MYSQL_DATABASE="iss_db" --name kilo_iss_2021-db_c kilo/iss_2021-db_i-stripped
+
+	Prepare the db with:
+		docker exec -i kilo_iss_2021-db_c mysql -uroot -pCorrectHorseBatteryStaple < sqlconfig/iss_db.sql
+
+	Unfortunatly, the stripping command doesn't work. The log of the error can be founf in dbserver/stripped_log.txt. This is an error that I am unable to find a fix for
+
+
+For the webserver image:
+	Build the image with:
+		docker build -t kilo/iss_2021-web_i .
+	
+	Strip the image with:
+		./strip-web.sh
+
+	Run the stripped image with  
+		docker run --net kilo/iss_2021_n --ip 203.0.113.77 --hostname www.cyber.test --add-host db.cyber.test:203.0.113.88 -p 80:80 --name kilo_iss_2021-web_c kilo/iss_2021-web_i-stripped
+
+	Unfortunatly, the stripping doesn't work as intended and I am a left with an error that you can find in webserver/stripped_log.txt that I am unable to find a solution for
