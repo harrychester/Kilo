@@ -22,3 +22,5 @@ These scripts need to ran in the same directory as strip-image.sh.
 
 Unfortunately, we could not get the stripping to work correctly and both result in errors. 
 The log of these errors can be found in the respective image folders under stripped_log.txt
+Because these don't result in a working image they have been omitted from the build-script
+
