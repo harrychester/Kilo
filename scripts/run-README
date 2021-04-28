@@ -1,4 +1,42 @@
-to run the containers "repeated-run-script" must be run using the command "./repeated-run-script" in bash. 
+one-off-run-config-script.sh
+
+to setup the containers so they can be run "one-off-run-config-script.sh" must be run using the command "./one-off-run-config-script.sh". 
+
+This command installs the needed package for the SELinux policy found in the .te files to be compiled. 
+sudo yum install--assumeyes selinux-policy-devel
+
+The following command creates the network that will allow the mysql server and the web server to communicate. 
+docker network create --subnet=203.0.113.0/24 kilo/iss_2021_n
+
+This command creates a volume which the database of suggrestions from the web server will be stored in.
+docker volume create kilo_database
+
+The following command changes directory to builds and then compiles the .te file found in the db directory. After this it will create a SELinux policy module
+which can then be used in the docker run command for the mysql server under the option "--security-opt".
+cd ../builds/web; sudo make -f /usr/share/selinux/devel/Makefile kilo_web.pp && sudo semodule -i kilo_web.pp
+
+This command does the same as the previous command but in the web directory so the SELinux policy module can be used in the docker run command for the web 
+server after the option "--security-opt" 
+cd ../db; sudo make -f /usr/share/selinux/devel/Makefile kilo_db.pp && sudo semodule -i kilo_db.pp
+
+The mysql server needs to be running for us to create the database that the suggestions from the web server will be stored in so the command below runs 
+the container using the same options explained lower down in the explanation of the repeated-run-script.sh script. 
+docker run -d -v kilo_database:/var/lib/mysql:rw --cap-drop ALL --cap-add CAP_DAC_READ_SEARCH --cap-add CAP_SETGID --cap-add CAP_SETUID  --security-opt label:type:kilo_db_t --net kilo/iss_2021_n --ip 203.0.113.88 --hostname db.cyber.test -e MYSQL_ROOT_PASSWORD="CorrectHorseBatteryStaple" -e MYSQL_DATABASE="iss_db" --name kilo_iss_2021-db_c kilo/iss_2021-db_i 
+
+To setup the database the docker exec command is used below which exicutes a command in the specified running container. the command that is being run specifies
+an sql file and passes it in to the mysql command with the correct credentials. the sql file creates a table "iss_db" and enters data into it.
+docker exec -i kilo_iss_2021-db_c mysql -uroot -pCorrectHorseBatteryStaple < dbserver/sqlconfig/iss_db.sql
+
+after this the container is setup and can now be stopped which is what the command bellow achieves.
+docker stop kilo_iss_2021-db_c
+
+To make sure that there are no errors when the repeated-run-script.sh script is run the container needs to be removed which the following command achives. 
+docker rm kilo_iss_2021-db_c
+
+
+repeated-run-script.sh
+
+to run the containers "repeated-run-script.sh" must be run using the command "./repeated-run-script.sh" in bash. 
 
 The following command runs the mysql server container. it uses -v to mount a volume called kilo_database onto the directroy /var/lib/mysql which means that mysql
 databases will be persistant if the container is stopped or removed and then added/started again. the "--cap-drop ALL" part of the command drops all the
@@ -18,3 +56,22 @@ is used. after this the same network as the mysql server is specified using the 
 Finally the containes's name is given following the "--name" option. 
 
 docker run -d --cap-drop all --cap-add CAP_SETUID --cap-add CAP_CHOWN --cap-add CAP_NET_BIND_SERVICE --cap-add CAP_SETGID --security-opt label:type:kilo_web_t --net kilo/iss_2021_n --ip 203.0.113.77 --hostname www.cyber.test --add-host db.cyber.test:203.0.113.88 -p 80:80 --name kilo_iss_2021-web_c kilo/iss_2021-web_i
+
+
+To shut down the web server container the following commands can be run:
+
+docker stop kilo_iss_2021-web_c
+
+docker rm kilo_iss_2021-web_c
+
+
+To shut down the mysql server container the following commands can be run:
+
+docker stop kilo_iss_2021-db_c
+
+docker rm kilo_iss_2021-db_c
+
+
+
+
+
