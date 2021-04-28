@@ -1,5 +1,5 @@
 
-bulild-script should be run in bash using the command "./build-script". This script builds two images kilo/iss_2021-db_i:latest and kilo/iss_2021-web_i:latest.
+build-script should be run in bash using the command "./build-script". This script builds two images kilo/iss_2021-db_i:latest and kilo/iss_2021-web_i:latest.
 
 first the script changes directory so the docker build commands only have to specify a file path one directory deep
 cd ../builds/
@@ -10,17 +10,16 @@ docker build db/ -t kilo/iss_2021-db_i:latest
 After the db image has been built the web image is then built using the docker file in the web directory. This image when built is called kilo/iss_2021-web_i
 docker build web/ -t kilo/iss_2021-web_i:latest
 
-Inside the respective image folders is the a file called DockerfileEdited from our stripping attempt as well as the original Dockerfiles.
-If a working solution is needed to be tested than the original ones should be used. This is because we couldn’t get a working solution with the edited ones
+Inside the respective image folders is a file called DockerfileEdited from our stripping attempt as well as the original Dockerfiles.
+If a working solution is needed to be tested than the original ones should be used. This is because we could not get a working solution with the edited ones
 
 This line takes the script back to the directory it started in.
 cd ../scripts/
 
-Once the images have been built, the stripping scripts can be ran. 
+Once the images have been built, the stripping scripts can be executed. 
 strip-db.sh creates a stripped database image and strip-web.sh creates a stripped web server image. 
-These scripts need to ran in the same directory as strip-image.sh.
+These scripts need to run in the same directory as strip-image.sh.
 
-Unfortunately, we could not get the stripping to work correctly and both result in errors. 
+Unfortunately, we could not get the stripping to work correctly, and both result in errors. 
 The log of these errors can be found in the respective image folders under stripped_log.txt
-Because these don't result in a working image they have been omitted from the build-script
-
+Because these do not result in a working image they have been omitted from the build-script
