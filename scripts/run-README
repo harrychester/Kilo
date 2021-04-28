@@ -1,1 +1,20 @@
+to run the containers "repeated-run-script" must be run using the command "./repeated-run-script" in bash. 
 
+The following command runs the mysql server container. it uses -v to mount a volume called kilo_database onto the directroy /var/lib/mysql which means that mysql
+databases will be persistant if the container is stopped or removed and then added/started again. the "--cap-drop ALL" part of the command drops all the
+capibilitys so we can add only the capibilities that the containers need. following this is the adding of three capibilities that the container requires
+to function. after this the "--security-opt" option defines the SELinux policy that is going to be restricting the container.  "--net" specifies the
+network that will be used in this case to comunicate with the web server with the ip specified in the "--ip" option and the hostname specified in the
+"--hostname" option. The "-e" options define enviroment varibles that can be used in the container. the varibles which are set are the root password for the 
+mysql server and the name of the database that the suguestions from the webserver shall be stored. finally the "--name" option defines the name of the container.
+
+
+docker run -d -v kilo_database:/var/lib/mysql:rw --cap-drop ALL --cap-add CAP_DAC_READ_SEARCH --cap-add CAP_SETGID --cap-add CAP_SETUID  --security-opt label:type:kilo_db_t --net kilo/iss_2021_n --ip 203.0.113.88 --hostname db.cyber.test -e MYSQL_ROOT_PASSWORD="CorrectHorseBatteryStaple" -e MYSQL_DATABASE="iss_db" --name kilo_iss_2021-db_c kilo/iss_2021-db_i 
+
+The following command runs the webserver container. again all capibilities are dropped using "--cap-drop ALL" and only a few needed ones are added using "--cap-add".
+like the previos tcommand we also add an SELinux policy to restrict the function of the container to what is strictly needed when the option "--security-opt"
+is used. after this the same network as the mysql server is specified using the "--net" option and the webserver's ip and hostname is specified in the 
+"--ip" and "--hostname" options respectfully. The mysql server is added as a host on the network with the option --add-host" followed by its hostname and ip[ adress.
+Finally the containes's name is given following the "--name" option. 
+
+docker run -d --cap-drop all --cap-add CAP_SETUID --cap-add CAP_CHOWN --cap-add CAP_NET_BIND_SERVICE --cap-add CAP_SETGID --security-opt label:type:kilo_web_t --net kilo/iss_2021_n --ip 203.0.113.77 --hostname www.cyber.test --add-host db.cyber.test:203.0.113.88 -p 80:80 --name kilo_iss_2021-web_c kilo/iss_2021-web_i
