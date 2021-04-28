@@ -22,3 +22,7 @@ These scripts need to run in the same directory as strip-image.sh, this is becau
 Unfortunately, we could not get the stripping to work correctly, and both result in errors. 
 The log of these errors can be found in the respective image folders under stripped_log.txt
 Because these do not result in a working image they have been omitted from the build-script
+
+For the SecComp section, 95 syscalls were whitelisted. The json file for the configuration is located at /Kilo/builds/web/webserver.json.
+However, it is not included in the final run command as it is not working properly. In the same directory, a syscalls.txt file is present to show the 95 system calls whitelisted.
+Upon running the SecComp profile, no errors were logged by the webserver container, but the database container logged errors. The log file seccomp_db_log.txt is located at /Kilo/builds/db/seccomp_db_log.txt
