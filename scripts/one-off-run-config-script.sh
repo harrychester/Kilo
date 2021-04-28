@@ -1,3 +1,5 @@
+sudo yum install--assumeyes selinux-policy-devel
+
 docker network create --subnet=203.0.113.0/24 kilo/iss_2021_n
 
 docker volume create kilo_database
@@ -13,4 +15,3 @@ docker exec -i kilo_iss_2021-db_c mysql -uroot -pCorrectHorseBatteryStaple < dbs
 docker stop kilo_iss_2021-db_c
 
 docker rm kilo_iss_2021-db_c
-
