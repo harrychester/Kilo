@@ -1,6 +1,10 @@
 one-off-run-config-script.sh
 
 Before running this script enter the folloing command to make the script runnable: chmod u+x one-off-run-config-script.sh
+
+Make sure you have edited the file: /lib/systemd/system/docker.service to have "--selinux-enabled" on the line that starts with "ExecStart="
+and also change in "" the the line "SELINUX=premissive" to "SELINUX=enforcing"
+
 To setup the containers so they can be run "one-off-run-config-script.sh" must be run using the command "./one-off-run-config-script.sh". 
 
 This command installs the needed package for the SELinux policy found in the .te files to be compiled. 
