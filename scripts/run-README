@@ -1,6 +1,7 @@
 one-off-run-config-script.sh
 
-to setup the containers so they can be run "one-off-run-config-script.sh" must be run using the command "./one-off-run-config-script.sh". 
+Before running this script enter the folloing command to make the script runnable: chmod u+x one-off-run-config-script.sh
+To setup the containers so they can be run "one-off-run-config-script.sh" must be run using the command "./one-off-run-config-script.sh". 
 
 This command installs the needed package for the SELinux policy found in the .te files to be compiled. 
 sudo yum install--assumeyes selinux-policy-devel
@@ -39,7 +40,8 @@ which is located at /Kilo/builds/db/seccomp_db_log.txt
 
 repeated-run-script.sh
 
-to run the containers "repeated-run-script.sh" must be run using the command "./repeated-run-script.sh" in bash. 
+Before running this script enter the folloing command to make the script runnable: chmod u+x one-off-run-config-script.sh
+To run the containers "repeated-run-script.sh" must be run using the command "./repeated-run-script.sh" in bash. 
 
 The following command runs the mysql server container. it uses -v to mount a volume called kilo_database onto the directroy /var/lib/mysql which means that mysql
 databases will be persistent if the container is stopped or removed and then added/started again. the "--cap-drop ALL" part of the command drops all the
