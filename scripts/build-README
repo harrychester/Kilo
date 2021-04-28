@@ -1,4 +1,5 @@
-build-script should be run in bash using the command "./build-script". This script builds two images kilo/iss_2021-db_i:latest and kilo/iss_2021-web_i:latest.
+Before running the build script the following command should be run to make it possible to run: chmod u+x  build-script.sh
+build-script should be run in bash using the command "./build-script.sh". This script builds two images kilo/iss_2021-db_i:latest and kilo/iss_2021-web_i:latest.
 
 first the script changes directory so the docker build commands only have to specify a file path one directory deep
 cd ../builds/
