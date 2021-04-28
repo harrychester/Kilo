@@ -1,4 +1,4 @@
-sudo yum install--assumeyes selinux-policy-devel
+sudo yum install --assumeyes selinux-policy-devel
 
 docker network create --subnet=203.0.113.0/24 kilo/iss_2021_n
 
