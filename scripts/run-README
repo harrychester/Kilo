@@ -44,7 +44,7 @@ which is located at /Kilo/builds/db/seccomp_db_log.txt
 
 repeated-run-script.sh
 
-Before running this script enter the folloing command to make the script runnable: chmod u+x one-off-run-config-script.sh
+Before running this script enter the folloing command to make the script runnable: chmod u+x repeated-run-script.sh
 To run the containers "repeated-run-script.sh" must be run using the command "./repeated-run-script.sh" in bash. 
 
 The following command runs the mysql server container. it uses -v to mount a volume called kilo_database onto the directroy /var/lib/mysql which means that mysql
