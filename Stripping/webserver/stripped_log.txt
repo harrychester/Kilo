@@ -1,6 +1,0 @@
-/docker-entrypoint.sh: line 3: mkdir: command not found
-nginx: [emerg] getpwnam("nginx") failed (2: No such file or directory) in /etc/nginx/nginx.conf:5
-[27-Apr-2021 13:57:35] ERROR: failed to open error_log (/var/log/php-fpm/error.log): No such file or directory (2)
-[27-Apr-2021 13:57:35] ERROR: failed to post process the configuration
-[27-Apr-2021 13:57:35] ERROR: FPM initialization failed
-
