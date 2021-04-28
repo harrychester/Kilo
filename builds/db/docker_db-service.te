@@ -1,11 +1,11 @@
-policy_module(kilo_db,0.1)
+policy_module(docker_db-service,0.1)
 # derived from:
 #   Original material from James Dorgan
 #   https://opensource.com/business/15/3/docker-security-tuning
 
 # This template interface creates the docker_chat_t type as a
 # type which can be run as a docker container. 
-virt_sandbox_domain_template(kilo_db);
+virt_sandbox_domain_template(docker_db-service);
 
 ################# put audit2allow rules in here ##############
 require{
@@ -14,17 +14,17 @@ require{
 	type sysfs_t;
 }
 
-allow kilo_db_t mysqld_port_t:tcp_socket name_bind;
-allow kilo_db_t node_t:tcp_socket node_bind;
-allow kilo_db_t self:capability { dac_override setgid setuid };
-allow kilo_db_t self:tcp_socket { accept bind create getattr listen setopt read write };
-allow kilo_db_t self:netlink_route_socket { read write };
-allow kilo_db_t sysfs_t:dir read;
-allow kilo_db_t sysfs_t:lnk_file { write read };
-allow kilo_db_t sysfs_t:file { open read };
-allow kilo_db_t self:udp_socket { connect create getattr ioctl };
-allow kilo_db_t self:netlink_route_socket { bind create getattr nlmsg_read read write };
-allow kilo_db_t self:capability dac_read_search;
+allow docker_db-service_t mysqld_port_t:tcp_socket name_bind;
+allow docker_db-service_t node_t:tcp_socket node_bind;
+allow docker_db-service_t self:capability { dac_override setgid setuid };
+allow docker_db-service_t self:tcp_socket { accept bind create getattr listen setopt read write };
+allow docker_db-service_t self:netlink_route_socket { read write };
+allow docker_db-service_t sysfs_t:dir read;
+allow docker_db-service_t sysfs_t:lnk_file { write read };
+allow docker_db-service_t sysfs_t:file { open read };
+allow docker_db-service_t self:udp_socket { connect create getattr ioctl };
+allow docker_db-service_t self:netlink_route_socket { bind create getattr nlmsg_read read write };
+allow docker_db-service_t self:capability dac_read_search;
 
 
 
@@ -35,7 +35,7 @@ allow kilo_db_t self:capability dac_read_search;
 
 # Permissive domains allow processes to not be blocked by SELinux
 # Remove this rule, when you are confident in the policy.
-# permissive kilo_db_t;
+# permissive docker_db-service_t;
 
 
 ##############################################################
