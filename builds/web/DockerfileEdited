@@ -1,4 +1,4 @@
-# Webserver Dockerfile Edited
+# Webserver Dockerfile
 
 FROM centos:8
 
@@ -20,10 +20,12 @@ COPY configfiles/www.conf       /etc/php-fpm.d/www.conf
 COPY configfiles/php-fpm.conf   /etc/nginx/conf.d/php-fpm.conf
 COPY configfiles/docker-entrypoint.sh /docker-entrypoint.sh
 
+# Create and set correct permissions on certain files
 RUN touch /var/log/nginx/error.log /var/log/php-fpm/error.log \
 	chmod 777 /docker-entrypoint.sh /run/* /etc/nginx/nginx.conf /var/log/nginx/error.log chmod 777 /var/log/php-fpm/error.log \
 	rm -f /usr/share/nginx/html/index.html /usr/share/nginx/html/nginx-logo.png /usr/share/nginx/html/poweredby.png
 
 EXPOSE 80
 
+#Ensure the entry point code is ran on /bin/bash
 ENTRYPOINT ["/bin/bash", "/docker-entrypoint.sh"]
