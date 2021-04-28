@@ -1,4 +1,3 @@
-
 build-script should be run in bash using the command "./build-script". This script builds two images kilo/iss_2021-db_i:latest and kilo/iss_2021-web_i:latest.
 
 first the script changes directory so the docker build commands only have to specify a file path one directory deep
@@ -18,7 +17,7 @@ cd ../scripts/
 
 Once the images have been built, the stripping scripts can be executed. 
 strip-db.sh creates a stripped database image and strip-web.sh creates a stripped web server image. 
-These scripts need to run in the same directory as strip-image.sh.
+These scripts need to run in the same directory as strip-image.sh, this is because strip-db.sh and strip-web.sh pass data to strip-image.sh
 
 Unfortunately, we could not get the stripping to work correctly, and both result in errors. 
 The log of these errors can be found in the respective image folders under stripped_log.txt
