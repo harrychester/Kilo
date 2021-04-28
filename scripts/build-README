@@ -1,2 +1,14 @@
 
-bulild-script should be run which builds two images kilo/iss_2021-db_i:latest and kilo/iss_2021-web_i:latest.
+bulild-script should be run in bash using the command "./build-script". This script builds two images kilo/iss_2021-db_i:latest and kilo/iss_2021-web_i:latest.
+
+first the script changes directory so the docker build commands only have to specify a file path one directory deep
+cd ../builds/
+
+Then this command builds the web server image from the dockerfile in the db directory. This image  when built is called kilo/iss_2021-web_i.
+docker build db/ -t kilo/iss_2021-db_i:latest
+
+After the db image has been built the web image is then built using the docker file in the web directory. This image  when built is called kilo/iss_2021-web_i
+docker build web/ -t kilo/iss_2021-web_i:latest
+
+This line takes the script back to the directory it started in.
+cd ../scripts/
