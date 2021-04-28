@@ -1,11 +1,11 @@
-policy_module(kilo_web,0.1)
+policy_module(docker_web-service,0.1)
 # derived from:
 #   Original material from James Dorgan
 #   https://opensource.com/business/15/3/docker-security-tuning
 
 # This template interface creates the docker_chat_t type as a
 # type which can be run as a docker container. 
-virt_sandbox_domain_template(kilo_web);
+virt_sandbox_domain_template(docker_web-service);
 
 ################# put audit2allow rules in here ##############
 require{
@@ -14,19 +14,19 @@ require{
 	type node_t;
 }
 
-allow kilo_web_t http_port_t:tcp_socket name_bind;
-allow kilo_web_t mysqld_port_t:tcp_socket name_connect;
-allow kilo_web_t node_t:tcp_socket node_bind;
-allow kilo_web_t self:capability { chown net_bind_service setgid setuid };
-allow kilo_web_t self:tcp_socket { accept bind connect create getattr getopt listen setopt };
-allow kilo_web_t self:udp_socket create;
-allow kilo_web_t self:tcp_socket { read write };
+allow docker_web-service_t http_port_t:tcp_socket name_bind;
+allow docker_web-service_t mysqld_port_t:tcp_socket name_connect;
+allow docker_web-service_t node_t:tcp_socket node_bind;
+allow docker_web-service_t self:capability { chown net_bind_service setgid setuid };
+allow docker_web-service_t self:tcp_socket { accept bind connect create getattr getopt listen setopt };
+allow docker_web-service_t self:udp_socket create;
+allow docker_web-service_t self:tcp_socket { read write };
 
 ################# end audit2allow additions ##################
 
 # Permissive domains allow processes to not be blocked by SELinux
 # Remove this rule, when you are confident in the policy.
-# permissive kilo_web_t;
+# permissive docker_web-service_t;
 
 
 ##############################################################
